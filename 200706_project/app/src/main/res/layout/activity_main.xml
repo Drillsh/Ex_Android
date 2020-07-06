@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="숫자1 :"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edtNo1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:text="숫자2 :"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edtNo2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rgCalculate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rbAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="덧셈" />
+
+        <RadioButton
+            android:id="@+id/rbSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="뺄셈" />
+
+        <RadioButton
+            android:id="@+id/rbMul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="곱셈" />
+
+        <RadioButton
+            android:id="@+id/rbDiv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="나눔" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="결과값 :"
+            android:textSize="25sp" />
+
+        <EditText
+            android:id="@+id/edtResult"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:inputType="numberDecimal" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="전송하기"
+        android:textSize="25sp" />
+</LinearLayout>
