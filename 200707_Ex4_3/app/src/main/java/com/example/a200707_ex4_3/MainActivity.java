@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         edtResult = (TextView) findViewById(R.id.edtResult);
 
 
+        // 버튼들 리스너
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 handleBtnListener(view);
             }
-        });}
+        });
+    }
 
+    // 버튼 리스너
     private void handleBtnListener(View view) {
 
         // 빈칸인데 클릭시 메시지
@@ -86,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // view로 주체 가져옴
         Button clickedBtn = (Button) view;
 
         switch (clickedBtn.getText().toString()) {
@@ -118,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
         intent.putExtra("calculateRequest", list);
 
-        startActivityForResult(intent,REQUEST_SUB1);
+        startActivityForResult(intent, REQUEST_SUB1);
     }
 
     @Override
