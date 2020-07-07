@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="선택을 시작하시겠습니까?"
+        android:textSize="25sp" />
+
+    <Switch
+        android:id="@+id/swStart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="시작!"
+        android:textSize="25sp" />
+
+    <TextView
+        android:id="@+id/txtLike"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="좋아하는 안드로이드?"
+        android:textSize="25sp"
+        android:visibility="invisible" />
+
+    <RadioGroup
+        android:id="@+id/rgChoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rdo1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="롤리팝"
+            android:textSize="25sp"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/rdo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="킷캣"
+            android:textSize="25sp"
+            android:visibility="invisible" />
+
+        <RadioButton
+            android:id="@+id/rdo3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="젤리빈"
+            android:textSize="25sp"
+            android:visibility="invisible" />
+    </RadioGroup>
+
+    <ImageView
+        android:id="@+id/imgChange"
+        android:layout_width="match_parent"
+        android:layout_height="204dp"
+        android:visibility="invisible"
+        />
+
+    <Button
+        android:id="@+id/btnExit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="종료"
+        android:textSize="25sp"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="처음으로"
+        android:textSize="25sp"
+        android:visibility="invisible" />
+</LinearLayout>
