@@ -51,8 +51,6 @@ public class Sub1Activity extends AppCompatActivity {
         list.clear();
         list.add(resultNumParcel);
 
-
-
         intent.putExtra("calOk", list);
         setResult(1011, intent);
 
