@@ -1,26 +1,25 @@
-package com.example.a200709_ex;
+package com.example.ex_200713_tabhost;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-public class Fragment3 extends Fragment {
+public class FragmentTwo extends Fragment {
 
+    private ImageView imageView;
     private MainActivity mainActivity;
-    private LinearLayout linearLayout1;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainActivity = (MainActivity) getActivity();
-
     }
 
     @Override
@@ -33,16 +32,17 @@ public class Fragment3 extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.two_fragment, container, false);
 
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.flagment_3, container, false);
+        imageView = (ImageView) viewGroup.findViewById(R.id.imageView);
 
-        findViewByIdFunction(rootView);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.changeFragment(mainActivity.FRAGMENT_3);
+            }
+        });
 
-
-        return rootView;
-    }
-
-    private void findViewByIdFunction(ViewGroup rootView) {
-        linearLayout1 = (LinearLayout) rootView.findViewById(R.id.linearLayout1);
+        return viewGroup;
     }
 }

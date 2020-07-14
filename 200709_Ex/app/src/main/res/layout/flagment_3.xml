@@ -4,16 +4,31 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnToFrag1"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="달력" />
+        android:layout_height="match_parent"
+        android:background="#CDDC39">
 
-    <Button
-        android:id="@+id/btnToFrag2"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="계산기" />
+        android:layout_height="match_parent"
+        android:background="#FF5722"
+        android:orientation="vertical"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/arin" />
+
+    </LinearLayout>
+
+
+    </FrameLayout>
+
+
+
 
 </LinearLayout>

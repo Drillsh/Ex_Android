@@ -30,6 +30,8 @@ public class Sub2Activity extends AppCompatActivity {
             getIntentFunction(intent);
         }
 
+        calcuator();
+
         // 결과값 전송 버튼 이벤트
         btnSendResult.setOnClickListener(new View.OnClickListener() {
             @Override

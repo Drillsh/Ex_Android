@@ -20,23 +20,8 @@ public class Fragment2 extends Fragment {
 
     private EditText edtNo1;
     private EditText edtNo2;
-    private Button btn0;
-    private Button btn1;
-    private Button btn2;
-    private Button btn3;
-    private Button btn4;
-    private Button btn5;
-    private Button btn6;
-    private Button btn7;
-    private Button btn8;
-    private Button btn9;
-    private Button btnAdd;
-    private Button btnSub;
-    private Button btnMul;
-    private Button btnDiv;
+
     private Button btnChange;
-    private Button btnToFrag1;
-    private Button btnToFrag3;
 
     private Button[] btnArray = new Button[10];
     private int[] idArray = {R.id.btn0, R.id.btn1, R.id.btn2,R.id.btn3,R.id.btn4,R.id.btn5,R.id.btn6,R.id.btn7,R.id.btn8,R.id.btn9};
@@ -99,20 +84,6 @@ public class Fragment2 extends Fragment {
             }
         });
 
-        btnToFrag1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.changeFragment(mainActivity.FRGMENT_1);
-            }
-        });
-
-        btnToFrag3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.changeFragment(mainActivity.FRGMENT_3);
-            }
-        });
-
         return rootView;
     }
 
@@ -170,9 +141,6 @@ public class Fragment2 extends Fragment {
         edtNo2 = (EditText)  rootView.findViewById(R.id.edtNo2);
         txtResult = (TextView) rootView.findViewById(R.id.txtResult);
         btnChange = (Button)  rootView.findViewById(R.id.btnChange);
-        btnToFrag1 = (Button) rootView.findViewById(R.id.btnToFrag1);
-        btnToFrag3 = (Button) rootView.findViewById(R.id.btnToFrag3);
-
 
         // for문으로 연결 - 숫자 버튼
         for(int i = 0; i < btnArray.length; ++i){

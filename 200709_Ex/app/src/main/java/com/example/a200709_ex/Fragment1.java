@@ -32,8 +32,7 @@ public class Fragment1 extends Fragment {
 
     private Button btnFinish;
     private TextView txtFinalTime;
-    private Button btnToCal;
-    private Button btnToFrag3;
+
     private LinearLayout layoutHide;
 
     private int year;
@@ -98,20 +97,6 @@ public class Fragment1 extends Fragment {
             }
         });
 
-        // Fragment2 - 계산기로 전환
-        btnToCal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.changeFragment(mainActivity.FRGMENT_2);
-            }
-        });
-
-        btnToFrag3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.changeFragment(mainActivity.FRGMENT_3);
-            }
-        });
 
         return rootView;
     }
@@ -164,8 +149,6 @@ public class Fragment1 extends Fragment {
         timePicker = (TimePicker) rootView.findViewById(R.id.timePicker);
         btnFinish = (Button) rootView.findViewById(R.id.btnFinish);
         txtFinalTime = (TextView) rootView.findViewById(R.id.txtFinalTime);
-        btnToCal = (Button) rootView.findViewById(R.id.btnToCal);
-        btnToFrag3 = (Button) rootView.findViewById(R.id.btnToFrag3);
         layoutHide = (LinearLayout) rootView.findViewById(R.id.layoutHide);
     }
 
