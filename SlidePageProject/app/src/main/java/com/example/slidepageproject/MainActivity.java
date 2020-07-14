@@ -105,9 +105,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showMessage(String toastMeassage) {
-        Toast.makeText(getApplicationContext(), toastMeassage ,Toast.LENGTH_SHORT).show();
-    }
+
 
     private void changeView(int i) {
         switch (i) {
