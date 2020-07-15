@@ -37,6 +37,7 @@ public class SubActivity extends AppCompatActivity {
 
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);

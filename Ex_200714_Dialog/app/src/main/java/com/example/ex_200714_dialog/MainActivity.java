@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuTo2:
                 Intent intent = new Intent(getApplicationContext(), SubActivity.class);
                 startActivity(intent);
+                finish();
                 break;
 
         }

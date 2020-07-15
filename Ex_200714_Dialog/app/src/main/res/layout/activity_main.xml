@@ -52,7 +52,6 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:layout_weight="1"
             android:background="#754CAF50"
             android:orientation="vertical">
 
