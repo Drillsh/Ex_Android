@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/frameContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/slidingPage"
+            android:layout_width="200dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="#C800BCD4"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnToFrag1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="프래그1" />
+
+            <Button
+                android:id="@+id/btnToFrag2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="프래그2" />
+
+            <Button
+                android:id="@+id/btnToFrag3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="프래그3" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

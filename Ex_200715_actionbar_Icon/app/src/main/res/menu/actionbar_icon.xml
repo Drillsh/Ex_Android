@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/iconMoveToActivity"
+        android:icon="@drawable/pika"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/iconSlide"
+        android:icon="@drawable/firi"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/fragment1"
+        android:title="Fragment1" />
+    <item
+        android:id="@+id/fragment2"
+        android:title="Fragment2" />
+    <item
+        android:id="@+id/fragment3"
+        android:title="Fragment3" />
+</menu>
