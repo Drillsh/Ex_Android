@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private final int FRAGMENT_1 = 0;
-    private final int FRAGMENT_2 = 1;
-    private final int FRAGMENT_3 = 2;
+    public static final int FRAGMENT_1 = 0;
+    public static final int FRAGMENT_2 = 1;
+    public static final int FRAGMENT_3 = 2;
 
     public Fragment1 fragment1;
     public Fragment2 fragment2;
@@ -85,9 +85,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.fragment3:
                 changeFragment(FRAGMENT_3);
                 break;
-            case R.id.iconMoveToActivity: // 액티비티 이동
+            case R.id.iconMoveToDiary: // 액티비티 이동
                 Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
                 startActivity(intent);
+                finish();
+                break;
+            case R.id.iconMoveToPhotoshop:
+                Intent intent1 = new Intent(getApplicationContext(), PhotoshopActivity.class);
+                startActivity(intent1);
+                break;
+            case R.id.iconMoveToDrawing:
+                Intent intent2 = new Intent(getApplicationContext(), DrawingPadActivity.class);
+                startActivity(intent2);
+                finish();
                 break;
             case R.id.iconSlide: //슬라이딩 메뉴
                 slidingPageMoving();

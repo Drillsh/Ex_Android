@@ -3,7 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/iconMoveToActivity"
+        android:id="@+id/iconMoveToPhotoshop"
+        android:icon="@drawable/icon"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/iconMoveToDrawing"
+        android:icon="@drawable/gobuk"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/iconMoveToDiary"
         android:icon="@drawable/pika"
         android:title="Item"
         app:showAsAction="always" />
@@ -20,5 +30,5 @@
         android:title="Fragment2" />
     <item
         android:id="@+id/fragment3"
-        android:title="Fragment3" />
+        android:title="Fragment3" ></item>
 </menu>
