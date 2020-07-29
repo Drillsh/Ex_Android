@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
         return musicDataArrayList;
     }
 
-
     private ArrayList<MusicData> musicLikeArrayList = new ArrayList<>();
 
     ///////////////////////////////////////////////
@@ -87,8 +86,12 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
         // 음악 리스트 가져오기
         musicDataArrayList = musicDBHelper.compareArrayList();
 
+        // 음악 DB 저장
+        insertDB(musicDataArrayList);
+
         // 어댑터에 데이터 세팅
         recyclerViewListUpdate(musicDataArrayList);
+        likeRecyclerViewListUpdate(getLikeList());
 
         //////////////////////////////////////////
         player = new Player();
@@ -110,6 +113,15 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
             }
         });
 
+        musicAdapter_like.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int pos) {
+                // 플레이어 화면 처리
+                ((Player)player).setPlayerData2(pos);
+                drawerLayout.closeDrawer(Gravity.RIGHT);
+                index = pos;
+            }
+        });
 
         // 프레임 레이아웃 스와이프 -> DrawerLayout 열기
         frameLayout.setOnTouchListener(new View.OnTouchListener() {
@@ -166,16 +178,32 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
 
 
     // DB에 mp3 삽입
-//    private void insertDB(MusicDBHelper musicDBHelper){
-//
-//        boolean returnValue = musicDBHelper.insertMusicDataToDB();
-//
-//        if(returnValue){
-//            Toast.makeText(getApplicationContext(), "삽입 성공", Toast.LENGTH_SHORT).show();
-//        }else{
-//            Toast.makeText(getApplicationContext(), "삽입 실패", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+    private void insertDB(ArrayList<MusicData> arrayList){
+
+        boolean returnValue = musicDBHelper.insertMusicDataToDB(arrayList);
+
+        if(returnValue){
+            Toast.makeText(getApplicationContext(), "삽입 성공", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "삽입 실패", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    // 좋아요 리스트 가져오기
+    private ArrayList<MusicData> getLikeList(){
+
+        musicLikeArrayList = musicDBHelper.saveLikeList();
+
+        if(musicLikeArrayList.isEmpty()){
+            Toast.makeText(getApplicationContext(), "가져오기 실패", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(getApplicationContext(), "가져오기 성공", Toast.LENGTH_SHORT).show();
+        }
+
+        return musicLikeArrayList;
+    }
+
 
     // 어댑터에 데이터 세팅
     private void recyclerViewListUpdate(ArrayList<MusicData> arrayList){
@@ -185,17 +213,42 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
 
         // recyclerView에 어댑터 세팅
         recyclerView.setAdapter(musicAdapter);
+        musicAdapter.notifyDataSetChanged();
+    }
 
+    // like 어댑터 데이터 세팅
+    private void likeRecyclerViewListUpdate(ArrayList<MusicData> arrayList){
+
+        // 어댑터에 데이터리스트 세팅
+        musicAdapter_like.setMusicList(arrayList);
+
+        // recyclerView에 어댑터 세팅
+        recyclerLike.setAdapter(musicAdapter_like);
+        musicAdapter_like.notifyDataSetChanged();
     }
 
     @Override
     public void onItemClick(View v, int pos) {}
 
-    public RecyclerView getRecyclerLike() {
-        return recyclerLike;
-    }
 
     public MusicAdapter getMusicAdapter_like() {
         return musicAdapter_like;
+    }
+
+    public ArrayList<MusicData> getMusicLikeArrayList() {
+        return musicLikeArrayList;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+       boolean returnValue = musicDBHelper.updateMusicDataToDB(musicDataArrayList);
+
+       if(returnValue){
+           Toast.makeText(getApplicationContext(), "업뎃 성공", Toast.LENGTH_SHORT).show();
+       }else{
+           Toast.makeText(getApplicationContext(), "업뎃 실패", Toast.LENGTH_SHORT).show();
+       }
     }
 }

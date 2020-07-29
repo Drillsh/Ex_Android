@@ -16,7 +16,6 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     private SQLiteDatabase sqLiteDatabase;
 
 
-
     public MusicDBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
         this.context = context;
@@ -35,6 +34,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                         "duration VARCHAR(15)," +
                         "click INTEGER," +
                         "liked INTEGER );");
+
     }
 
     // 테이블을 삭제한다.
@@ -76,25 +76,61 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     }
 
     // DB 삽입
-//    public boolean insertMusicDataToDB() {
-//
-//        boolean returnValue = false;
-///sqLiteDatabase = this.getWritableDatabase();
-//
-//        String query = "insert into musicTBL values("
-//                + "'" + id + "',"
-//                + "'" + artist + "',"
-//                + "'" + title + "',"
-//                + "'" + albumArt + "',"
-//                + "'" + duration + "',"
-//                + 0 + "," + 0 + ");";
-//
-//        // 쿼리문 작성해서 넘김
-//        // 예외발생시 SQLException
-//        sqLiteDatabase.execSQL(query);
-//
-//        return returnValue;
-//    }
+    public boolean insertMusicDataToDB(ArrayList<MusicData> arrayList) {
+
+        boolean returnValue = false;
+        sqLiteDatabase = this.getWritableDatabase();
+
+        try {
+            for (MusicData data : arrayList) {
+
+                ArrayList<MusicData> dbList = selectMusicTbl();
+
+                if (dbList.contains(data)) {
+
+                    String query = "insert into musicTBL values("
+                            + "'" + data.getId() + "',"
+                            + "'" + data.getArtist() + "',"
+                            + "'" + data.getTitle() + "',"
+                            + "'" + data.getAlbumArt() + "',"
+                            + "'" + data.getDuration() + "',"
+                            + 0 + "," + 0 + ");";
+
+                    // 쿼리문 작성해서 넘김
+                    // 예외발생시 SQLException
+                    sqLiteDatabase.execSQL(query);
+                }
+            }
+            returnValue = true;
+        } catch (Exception e) {
+            returnValue = false;
+        }
+
+        return returnValue;
+    }
+
+    // DB 업데이트
+    public boolean updateMusicDataToDB(ArrayList<MusicData> arrayList) {
+        boolean returnValue = false;
+        sqLiteDatabase = this.getWritableDatabase();
+
+        try {
+            for (MusicData data : arrayList) {
+
+                String query = "UPDATE musicTBL SET click = " + data.getPlayCount() + ", liked = " + data.getLiked() + " WHERE id = '" + data.getId() + "';";
+                sqLiteDatabase.execSQL(query);
+            }
+
+            returnValue = true;
+        }catch (Exception e){
+            return false;
+        }
+
+        sqLiteDatabase.close();
+
+        return returnValue;
+    }
+
     // sdCard 안의 음악을 검색한다
     public ArrayList<MusicData> findMusic() {
         ArrayList<MusicData> sdCardList = new ArrayList<>();
@@ -130,30 +166,64 @@ public class MusicDBHelper extends SQLiteOpenHelper {
         return sdCardList;
     }
 
+    // 좋아요 리스트 저장
+    public ArrayList<MusicData> saveLikeList(){
+
+        ArrayList<MusicData> musicDBArrayList = new ArrayList<>();
+
+        sqLiteDatabase = this.getWritableDatabase();
+
+        // 쿼리문 입력하고 커서 리턴 받음
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from musicTBL where liked = 1;", null);
+
+        while (cursor.moveToNext()) {
+            MusicData musicData = new MusicData(
+                    cursor.getString(0),
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getString(3),
+                    cursor.getString(4),
+                    cursor.getInt(5),
+                    cursor.getInt(6));
+
+            musicDBArrayList.add(musicData);
+        }
+
+        cursor.close();
+        sqLiteDatabase.close();
+
+        return musicDBArrayList;
+    }
+
+
     // sdcard에서 검색한 음악과 DB를 비교해서 중복되지 않은 플레이리스트를 리턴
-    public ArrayList<MusicData> compareArrayList(){
+    public ArrayList<MusicData> compareArrayList() {
         ArrayList<MusicData> sdCardList = findMusic();
         ArrayList<MusicData> dbList = selectMusicTbl();
 
         // DB가 비었다면 sdcard리스트 리턴
-        if(dbList.isEmpty()){
+        if (dbList.isEmpty()) {
             return sdCardList;
         }
 
         // DB가 이미 sdcard 정보를 가지고 있다면 DB리스트를 리턴
-        if(dbList.containsAll(sdCardList)){
+        if (dbList.containsAll(sdCardList)) {
             return dbList;
         }
 
         // 두 리스트를 비교후 중복되지 않은 값을 DB리스트에 추가후 리턴
-        for(MusicData mData : sdCardList){
-            for(MusicData mData2 : dbList){
-                if(mData.getId() == mData2.getId()){
-                    continue;
-                }
-                dbList.add(mData);
+        int size = dbList.size();
+        for (int i = 0; i < size; ++i) {
+            if (dbList.contains(sdCardList.get(i))) {
+                continue;
             }
+            dbList.add(sdCardList.get(i));
+            ++size;
         }
+
+
         return dbList;
     }
+
+
 }
