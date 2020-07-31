@@ -67,7 +67,7 @@ public class MusicData {
     }
 
     public void setPlayCount(int playCount) {
-        this.playCount += playCount;
+        this.playCount = playCount;
     }
 
     public int getLiked() {

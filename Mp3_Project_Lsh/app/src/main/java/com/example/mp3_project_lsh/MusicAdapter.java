@@ -33,19 +33,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
         this.context = context;
     }
 
-
-    public interface OnItemClickListener
-    {
-        void onItemClick(View v, int pos);
-    }
-
-    // OnItemClickListener 객체 참조를 어댑터에 전달하는 메서드
-    public void setOnItemClickListener(OnItemClickListener listener)
-    {
-        this.mListener = listener;
-    }
-
-
     @NonNull
     @Override
     public MusicAdapter.CustomViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -67,7 +54,6 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
 
         // recyclerviewer에 보여줘야할 정보 세팅
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("mm:ss");
-
         customViewHolder.title.setText(musicList.get(position).getTitle());
         customViewHolder.artist.setText(musicList.get(position).getArtist());
         customViewHolder.duration.setText(simpleDateFormat.format(Integer.parseInt(musicList.get(position).getDuration())));
@@ -87,7 +73,8 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
         /*컨텐트 프로바이더(Content Provider)는 앱 간의 데이터 공유를 위해 사용됨.
         특정 앱이 다른 앱의 데이터를 직접 접근해서 사용할 수 없기 때문에
         무조건 컨텐트 프로바이더를 통해 다른 앱의 데이터를 사용해야만 한다.
-        다른 앱의 데이터를 사용하고자 하는 앱에서는 URI를 이용하여 컨텐트 리졸버(Content Resolver)를 통해 다른 앱의 컨텐트 프로바이더에게 데이터를 요청하게 되는데
+        다른 앱의 데이터를 사용하고자 하는 앱에서는 URI를 이용하여 컨텐트 리졸버(Content Resolver)를 통해
+        다른 앱의 컨텐트 프로바이더에게 데이터를 요청하게 되는데
         요청받은 컨텐트 프로바이더는 URI를 확인하고 내부에서 데이터를 꺼내어 컨텐트 리졸버에게 전달한다.
         */
 
@@ -136,6 +123,16 @@ public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.CustomViewHo
         return null;
     }
 
+    public interface OnItemClickListener
+    {
+        void onItemClick(View v, int pos);
+    }
+
+    // OnItemClickListener 객체 참조를 어댑터에 전달하는 메서드
+    public void setOnItemClickListener(OnItemClickListener listener)
+    {
+        this.mListener = listener;
+    }
 
     public class CustomViewHolder extends RecyclerView.ViewHolder {
         ImageView albumArt;

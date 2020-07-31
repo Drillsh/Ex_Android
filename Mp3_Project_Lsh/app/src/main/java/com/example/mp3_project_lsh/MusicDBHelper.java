@@ -13,8 +13,6 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
 
     private Context context;
-    private SQLiteDatabase sqLiteDatabase;
-
 
     public MusicDBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -51,7 +49,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
 
         ArrayList<MusicData> musicDBArrayList = new ArrayList<>();
 
-        sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         // 쿼리문 입력하고 커서 리턴 받음
         Cursor cursor = sqLiteDatabase.rawQuery("select * from musicTBL;", null);
@@ -79,14 +77,16 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     public boolean insertMusicDataToDB(ArrayList<MusicData> arrayList) {
 
         boolean returnValue = false;
-        sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         try {
             for (MusicData data : arrayList) {
 
+                // db에서 리스트 가져오기
                 ArrayList<MusicData> dbList = selectMusicTbl();
 
-                if (dbList.contains(data)) {
+                // db에 속해있는 요소인지 확인
+                if (!dbList.contains(data)) {
 
                     String query = "insert into musicTBL values("
                             + "'" + data.getId() + "',"
@@ -112,7 +112,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     // DB 업데이트
     public boolean updateMusicDataToDB(ArrayList<MusicData> arrayList) {
         boolean returnValue = false;
-        sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         try {
             for (MusicData data : arrayList) {
@@ -142,10 +142,13 @@ public class MusicDBHelper extends SQLiteOpenHelper {
                 MediaStore.Audio.Media.ALBUM_ID,
                 MediaStore.Audio.Media.DURATION};
 
-        String selection = MediaStore.Audio.Media.DATA + " like ? ";
+        // 특정 폴더에서 음악 가져오기
+//        String selection = MediaStore.Audio.Media.DATA + " like ? ";
+//        String selectionArqs = new String[]{"%MusicList%"}
 
+        // 전체 영역에서 음악 가져오기
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                data, selection, new String[]{"%MusicList%"}, data[2] + " ASC");
+                data, null, null, data[2] + " ASC");
 
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -171,10 +174,10 @@ public class MusicDBHelper extends SQLiteOpenHelper {
 
         ArrayList<MusicData> musicDBArrayList = new ArrayList<>();
 
-        sqLiteDatabase = this.getWritableDatabase();
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         // 쿼리문 입력하고 커서 리턴 받음
-        Cursor cursor = sqLiteDatabase.rawQuery("select * from musicTBL where liked = 1;", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from musicTBL where liked = ?;", new String[]{"1"});
 
         while (cursor.moveToNext()) {
             MusicData musicData = new MusicData(
@@ -207,6 +210,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
         }
 
         // DB가 이미 sdcard 정보를 가지고 있다면 DB리스트를 리턴
+        // MusicData에 equals 오버라이딩 필수
         if (dbList.containsAll(sdCardList)) {
             return dbList;
         }

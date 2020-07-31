@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
 
     ///////////////////////////////////////////////
 
-    private SQLiteDatabase sqLiteDatabase;
     private MusicDBHelper musicDBHelper;
 
     ///////////////////////////////////////////////
@@ -93,31 +92,26 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
         recyclerViewListUpdate(musicDataArrayList);
         likeRecyclerViewListUpdate(getLikeList());
 
-        //////////////////////////////////////////
-        player = new Player();
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-
-        ft.replace(R.id.frameLayout, player);
-        ft.commit();
-        ///////////////////////////////////////////
+        // 프래그먼트 지정
+        replaceFrag();
 
         // recyclerview 클릭 이벤트
         musicAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 // 플레이어 화면 처리
-                ((Player)player).setPlayerData(pos);
+                ((Player)player).setPlayerData(pos,true);
                 drawerLayout.closeDrawer(Gravity.LEFT);
                 index = pos;
             }
         });
 
+        // like_recyclerview 클릭 이벤트
         musicAdapter_like.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int pos) {
                 // 플레이어 화면 처리
-                ((Player)player).setPlayerData2(pos);
+                ((Player)player).setPlayerData(pos,false);
                 drawerLayout.closeDrawer(Gravity.RIGHT);
                 index = pos;
             }
@@ -157,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
             }
         });
     }
+
+
 
     //sdcard 외부접근권한 설정
     private void requestPermissionsFunc() {
@@ -225,6 +221,16 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
         // recyclerView에 어댑터 세팅
         recyclerLike.setAdapter(musicAdapter_like);
         musicAdapter_like.notifyDataSetChanged();
+    }
+
+    // 프래그먼트 지정
+    private void replaceFrag() {
+        player = new Player();
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        ft.replace(R.id.frameLayout, player);
+        ft.commit();
     }
 
     @Override
