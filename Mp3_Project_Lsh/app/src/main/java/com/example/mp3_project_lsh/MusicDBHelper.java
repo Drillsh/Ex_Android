@@ -14,9 +14,21 @@ public class MusicDBHelper extends SQLiteOpenHelper {
 
     private Context context;
 
-    public MusicDBHelper(Context context) {
+    // 싱글톤
+    private static MusicDBHelper musicDBHelper;
+
+    private MusicDBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
         this.context = context;
+    }
+
+    public static MusicDBHelper getInstance(Context context){
+
+        if(musicDBHelper == null){
+            musicDBHelper = new MusicDBHelper(context);
+        }
+
+        return musicDBHelper;
     }
 
     // 테이블 생성
@@ -122,7 +134,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
             }
 
             returnValue = true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 
@@ -170,14 +182,14 @@ public class MusicDBHelper extends SQLiteOpenHelper {
     }
 
     // 좋아요 리스트 저장
-    public ArrayList<MusicData> saveLikeList(){
+    public ArrayList<MusicData> saveLikeList() {
 
         ArrayList<MusicData> musicDBArrayList = new ArrayList<>();
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         // 쿼리문 입력하고 커서 리턴 받음
-        Cursor cursor = sqLiteDatabase.rawQuery("select * from musicTBL where liked = ?;", new String[]{"1"});
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from musicTBL where liked = 1;", null);
 
         while (cursor.moveToNext()) {
             MusicData musicData = new MusicData(
@@ -225,9 +237,7 @@ public class MusicDBHelper extends SQLiteOpenHelper {
             ++size;
         }
 
-
         return dbList;
     }
-
 
 }

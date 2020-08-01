@@ -1,5 +1,6 @@
 package com.example.mp3_project_lsh;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -20,7 +22,6 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements MusicAdapter.OnItemClickListener{
-
 
     private DrawerLayout drawerLayout;
     private FrameLayout frameLayout;
@@ -41,17 +42,11 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
 
     private ArrayList<MusicData> musicDataArrayList = new ArrayList<>();
 
-    public ArrayList<MusicData> getMusicDataArrayList() {
-        return musicDataArrayList;
-    }
-
     private ArrayList<MusicData> musicLikeArrayList = new ArrayList<>();
 
     ///////////////////////////////////////////////
 
     private Fragment player;
-
-    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
         requestPermissionsFunc();
 
         // DBHelper 인스턴스
-        musicDBHelper = new MusicDBHelper(getApplicationContext());
+        musicDBHelper = MusicDBHelper.getInstance(getApplicationContext());
 
         // View 아이디 연결
         findViewByIdFunc();
@@ -97,23 +92,23 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
 
         // recyclerview 클릭 이벤트
         musicAdapter.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(View v, int pos) {
                 // 플레이어 화면 처리
                 ((Player)player).setPlayerData(pos,true);
                 drawerLayout.closeDrawer(Gravity.LEFT);
-                index = pos;
             }
         });
 
         // like_recyclerview 클릭 이벤트
         musicAdapter_like.setOnItemClickListener(new MusicAdapter.OnItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onItemClick(View v, int pos) {
                 // 플레이어 화면 처리
                 ((Player)player).setPlayerData(pos,false);
                 drawerLayout.closeDrawer(Gravity.RIGHT);
-                index = pos;
             }
         });
 
@@ -152,8 +147,6 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
         });
     }
 
-
-
     //sdcard 외부접근권한 설정
     private void requestPermissionsFunc() {
         ActivityCompat.requestPermissions(this,
@@ -162,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
                         Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         MODE_PRIVATE);
     }
-
 
     // View 아이디 연결
     private void findViewByIdFunc() {
@@ -174,15 +166,15 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
 
 
     // DB에 mp3 삽입
-    private void insertDB(ArrayList<MusicData> arrayList){
+      private void insertDB(ArrayList<MusicData> arrayList){
 
-        boolean returnValue = musicDBHelper.insertMusicDataToDB(arrayList);
+              boolean returnValue = musicDBHelper.insertMusicDataToDB(arrayList);
 
-        if(returnValue){
-            Toast.makeText(getApplicationContext(), "삽입 성공", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(getApplicationContext(), "삽입 실패", Toast.LENGTH_SHORT).show();
-        }
+              if(returnValue){
+                  Toast.makeText(getApplicationContext(), "삽입 성공", Toast.LENGTH_SHORT).show();
+              }else{
+                  Toast.makeText(getApplicationContext(), "삽입 실패", Toast.LENGTH_SHORT).show();
+              }
 
     }
 
@@ -236,6 +228,9 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
     @Override
     public void onItemClick(View v, int pos) {}
 
+    public ArrayList<MusicData> getMusicDataArrayList() {
+        return musicDataArrayList;
+    }
 
     public MusicAdapter getMusicAdapter_like() {
         return musicAdapter_like;
@@ -258,3 +253,4 @@ public class MainActivity extends AppCompatActivity implements MusicAdapter.OnIt
        }
     }
 }
+
